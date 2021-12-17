@@ -31,4 +31,4 @@ security:
     access_control:
         - { path: ^/api/authentication_token, roles: PUBLIC_ACCESS }
         - { path: ^/api,       roles: PUBLIC_ACCESS }
-        - { path: ^/api$,       roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api$,      roles: IS_AUTHENTICATED_ANONYMOUSLY }

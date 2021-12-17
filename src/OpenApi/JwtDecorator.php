@@ -15,7 +15,8 @@ final class JwtDecorator implements OpenApiFactoryInterface
 
     public function __construct(
         OpenApiFactoryInterface $decorated
-    ) {
+    )
+    {
         $this->decorated = $decorated;
     }
 
@@ -47,33 +48,32 @@ final class JwtDecorator implements OpenApiFactoryInterface
             ],
         ]);
 
-        $pathItem = new Model\PathItem(
-            ref: 'JWT Token',
+        $pathItem = new Model\PathItem(ref: 'JWT Token',
             post: new Model\Operation(
-            operationId: 'postCredentialsItem',
+        operationId: 'postCredentialsItem',
             tags: ['Token'],
             responses: [
-            '200' => [
-                'description' => 'Get JWT token',
-                'content' => [
-                    'application/json' => [
-                        'schema' => [
-                            '$ref' => '#/components/schemas/Token',
-                        ],
+        '200' => [
+            'description' => 'Get JWT token',
+            'content' => [
+                'application/json' => [
+                    'schema' => [
+                        '$ref' => '#/components/schemas/Token',
                     ],
                 ],
             ],
         ],
+    ],
             summary: 'Get JWT token to login.',
             requestBody: new Model\RequestBody(
-            description: 'Generate new JWT Token',
+        description: 'Generate new JWT Token',
             content: new \ArrayObject([
-            'application/json' => [
-                'schema' => [
-                    '$ref' => '#/components/schemas/Credentials',
-                ],
+        'application/json' => [
+            'schema' => [
+                '$ref' => '#/components/schemas/Credentials',
             ],
-        ]),
+        ],
+    ]),
         ),
         ),
         );
