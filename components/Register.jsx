@@ -9,9 +9,16 @@ export default function Register() {
     console.log(errors)
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className='form-wrapper' onSubmit={handleSubmit(onSubmit)}>
+
+            <div className='google-field'>
+                <a href="#"><img src='google-icon.png' alt='google icon' style={{ paddingRight: '5px' }} />Continuer avec google</a>
+            </div>
+
+            <div className='ou-field'>ou</div>
+
             <input 
-                {...register('email', { required: 'Ce champ est obligatoire'})}
+                {...register('email', { required: 'Ce champ est obligatoire' })}
                 placeholder='Email'
                 className='form-fields'
             />
@@ -30,7 +37,8 @@ export default function Register() {
                 placeholder='Confirmer votre mot de passe'
                 className='form-fields'
             />
-            <button type='submit' className='form-button-fields'>S'inscrire</button>
+            <button type='submit' className='form-submit-field'>S&apos;inscrire</button>
+            <button type='button' className='form-existing-account-field'>Se connecter avec un compte existant</button>
         </form>
     )
 }
