@@ -1,13 +1,17 @@
-import React from 'react'
 import Register from '../../components/Register'
 import Login from '../../components/Login'
-import { useState } from 'react/cjs/react.development'
+import CloseModal from '../../components/CloseModal'
+
+import { useRef, useState } from 'react/cjs/react.development'
 
 export default function Index() {
 
-    const [showLogin, setShowLogin] = useState(false);
-    const [showRegister, setShowRegister] = useState(false);
-    
+    const [showLogin, setShowLogin] = useState(false)
+    const [showRegister, setShowRegister] = useState(false)
+
+    const loginRef = useRef(null)
+    const registerRef = useRef(null)
+
     const handleClick = el => {
         if(el.target.className.split(' ')[1] == 'register') {
             setShowLogin(false)
@@ -17,6 +21,21 @@ export default function Index() {
             setShowLogin(true)
         }
     }
+
+    const displayModal = ref => {
+        if(ref.current.name == 'register') {
+            setShowRegister(false)
+            setShowLogin(true)
+        } else {
+            setShowLogin(false)
+            setShowRegister(true)
+        }
+    }
+
+    const closeModal = () => {
+        setShowRegister(false) || setShowLogin(false)
+    }
+
 
     return (
         <section className='home'>
@@ -31,15 +50,20 @@ export default function Index() {
                     </p>
                 </li>
                 <li className='p-tb-85 register-li' style={{cursor: 'pointer'}} onClick={(e) => handleClick(e)}>
-                    <a className="log-with-g register">S'inscrire</a>
+                    <a className="log-with-g register">S&apos;inscrire</a>
                 </li>
-                <li className='last-li-home' onClick={(e) => handleClick(e)}>
+                <li className='last-li-home' style={{cursor: 'pointer'}} onClick={(e) => handleClick(e)}>
                     <a className="log-with-g login">Déjà un compte ?</a>
                 </li>
             </ul>
 
-            {showRegister && <Register />}
-            {showLogin && <Login />}
+            {showRegister && <Register ref={registerRef} handleClick={() => displayModal(registerRef)}>
+                                <CloseModal handleClick={() => closeModal()} />
+                             </Register>}
+
+            {showLogin &&   <Login ref={loginRef} handleClick={() => displayModal(loginRef)}>
+                                <CloseModal handleClick={() => closeModal()} />
+                            </Login>}
             
         </section>
     )

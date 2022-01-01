@@ -1,16 +1,17 @@
-import React from 'react'
+import { forwardRef } from 'react'
 import { useForm } from 'react-hook-form'
+import { useRef } from 'react/cjs/react.development'
 
-export default function Login() {
+const Login = (props, ref) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm()
     const onSubmit = data => console.log(data)
 
-    console.log(errors)
-
     return (
         <form className='form-wrapper' onSubmit={handleSubmit(onSubmit)}>
 
+            {props.children}
+            
             <div className='google-field'>
                 <a href="#"><img src='google-icon.png' alt='google icon' style={{ paddingRight: '5px' }} />Continuer avec google</a>
             </div>
@@ -28,7 +29,9 @@ export default function Login() {
                 className='form-fields'
             />
             <button type='submit' className='form-submit-field'>Se connecter</button>
-            <button type='button' className='form-existing-account-field'>Créer un compte</button>
+            <button type='button' ref={ref} className='form-existing-account-field' name='login' onClick={props.handleClick}>Créer un compte</button>
         </form>
     )
 }
+
+export default forwardRef(Login);

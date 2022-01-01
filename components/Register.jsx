@@ -1,15 +1,16 @@
-import React from 'react'
+import { forwardRef } from 'react'
 import { useForm } from 'react-hook-form'
+import { useRef } from 'react/cjs/react.development'
 
-export default function Register() {
+const Register = (props, ref) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm()
     const onSubmit = data => console.log(data)
 
-    console.log(errors)
-
     return (
         <form className='form-wrapper' onSubmit={handleSubmit(onSubmit)}>
+
+            {props.children}
 
             <div className='google-field'>
                 <a href="#"><img src='google-icon.png' alt='google icon' style={{ paddingRight: '5px' }} />Continuer avec google</a>
@@ -38,7 +39,9 @@ export default function Register() {
                 className='form-fields'
             />
             <button type='submit' className='form-submit-field'>S&apos;inscrire</button>
-            <button type='button' className='form-existing-account-field'>Se connecter avec un compte existant</button>
+            <button type='button' ref={ref} className='form-existing-account-field' name='register' onClick={props.handleClick}>Se connecter avec un compte existant</button>
         </form>
     )
 }
+
+export default forwardRef(Register)
