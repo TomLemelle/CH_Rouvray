@@ -57,12 +57,12 @@ export default function Index() {
                 </li>
             </ul>
 
-            {showRegister && <Register ref={registerRef} handleClick={() => displayModal(registerRef)}>
-                                <CloseModal handleClick={() => closeModal()} />
+            {showRegister && <Register ref={registerRef} onClick={() => displayModal(registerRef)}>
+                                <CloseModal onClick={() => closeModal()} />
                              </Register>}
 
-            {showLogin &&   <Login ref={loginRef} handleClick={() => displayModal(loginRef)}>
-                                <CloseModal handleClick={() => closeModal()} />
+            {showLogin &&   <Login ref={loginRef} onClick={() => displayModal(loginRef)}>
+                                <CloseModal onClick={() => closeModal()} />
                             </Login>}
             
         </section>

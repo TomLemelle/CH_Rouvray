@@ -1,5 +1,5 @@
-const CloseModal = ({handleClick}) => {
-    return <div className='close-modal' onClick={handleClick}></div>
+const CloseModal = ({onClick}) => {
+    return <div className='close-modal' onClick={onClick}></div>
 }
 
 export default CloseModal;

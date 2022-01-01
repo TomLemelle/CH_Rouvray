@@ -11,7 +11,7 @@ const Login = (props, ref) => {
         <form className='form-wrapper' onSubmit={handleSubmit(onSubmit)}>
 
             {props.children}
-            
+
             <div className='google-field'>
                 <a href="#"><img src='google-icon.png' alt='google icon' style={{ paddingRight: '5px' }} />Continuer avec google</a>
             </div>
@@ -29,7 +29,7 @@ const Login = (props, ref) => {
                 className='form-fields'
             />
             <button type='submit' className='form-submit-field'>Se connecter</button>
-            <button type='button' ref={ref} className='form-existing-account-field' name='login' onClick={props.handleClick}>Créer un compte</button>
+            <button type='button' ref={ref} className='form-existing-account-field' name='login' onClick={props.onClick}>Créer un compte</button>
         </form>
     )
 }
