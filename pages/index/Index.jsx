@@ -3,8 +3,13 @@ import Login from '../../components/Login'
 import CloseModal from '../../components/CloseModal'
 
 import { useRef, useState } from 'react/cjs/react.development'
+import { useRouter } from 'next/router'
 
 export default function Index() {
+
+    let router = useRouter()
+
+    let greeting = router.locale === 'en-US' ? 'Hello World' : router.locale === 'de' ? 'Hallo Welt' : router.locale === 'fr' ? 'Bonjour le monde' : '';
 
     const [showLogin, setShowLogin] = useState(false)
     const [showRegister, setShowRegister] = useState(false)
@@ -41,6 +46,7 @@ export default function Index() {
         <section className='home'>
             <ul className='index-page'>
                 <li className='p-b-85'>
+                    <p>{greeting}</p>
                     <h1>CENTRE HOSPITALLIER DU <span>ROUVRAY</span></h1>
                 </li>
                 <li className='p-tb-85'>

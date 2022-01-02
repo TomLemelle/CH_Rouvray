@@ -39,7 +39,7 @@ const Register = (props, ref) => {
                 className='form-fields'
             />
             <button type='submit' className='form-submit-field'>S&apos;inscrire</button>
-            <button type='button' ref={ref} className='form-existing-account-field' name='register' onClick={props.onClick}>Se connecter avec un compte existant</button>
+            <button type='button' ref={ref} className='form-account-field' name='register' onClick={props.onClick}>Se connecter avec un compte existant</button>
         </form>
     )
 }
