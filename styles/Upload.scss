@@ -44,10 +44,6 @@
     width: 100%;
     height: 100%;
     display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 1px dashed black;
 
     .upload-icon {
       cursor: pointer;
@@ -70,6 +66,13 @@
         font-weight: 700;
       }
     }
+  }
+
+  .active-upload {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px dashed black;
   }
 
   .active-content {
@@ -96,6 +99,7 @@ label.upload {
   font-weight: normal;
   text-align: center;
   text-transform: uppercase;
+  transition: background 200ms ease-in-out;
 
   &:hover {
     background: lighten($blue, 10%);
@@ -112,5 +116,20 @@ label.upload {
 
   .upload-browse-msg {
     padding-left: 7px;
+  }
+}
+
+.uploaded-files {
+  border-collapse: collapse;
+  width: 100%;
+
+  td,
+  th {
+    text-align: left;
+    border-bottom: 1px solid black;
+    padding: 8px;
+  }
+  tr:nth-child(even) {
+    color: $blue;
   }
 }
