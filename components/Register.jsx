@@ -1,6 +1,7 @@
 import { forwardRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { useRef } from 'react/cjs/react.development'
+import { signIn } from 'next-auth/react'
 
 const Register = (props, ref) => {
 
@@ -12,9 +13,10 @@ const Register = (props, ref) => {
 
             {props.children}
 
-            <div className='google-field'>
-                <a href="#"><img src='google-icon.png' alt='google icon' style={{ paddingRight: '5px' }} />Continuer avec google</a>
+            <div className='google-field' onClick={() => signIn()}>
+                <button href="#"><img src='google-icon.png' alt='google icon' style={{ paddingRight: '5px' }} />Continuer avec google</button>
             </div>
+
 
             <div className='ou-field'>ou</div>
 

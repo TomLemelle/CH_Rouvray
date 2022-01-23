@@ -1,8 +1,9 @@
 import '../styles/main.scss';
+import { SessionProvider } from 'next-auth/react'
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
-    <>
+    <SessionProvider session={session}>
       <Component {...pageProps} />
       <style global>{`
         body {
@@ -10,8 +11,7 @@ function MyApp({ Component, pageProps }) {
         }
       `}
       </style>
-    </>
-    
+    </SessionProvider>
   )
 }
 
