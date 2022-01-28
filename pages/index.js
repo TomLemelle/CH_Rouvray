@@ -13,6 +13,7 @@ export default function Home() {
             <title>CH Rouvray</title>
         </Head>
         <button onClick={() => signOut()}>Se deconnecter</button>
+        <Index />
       </>
     )
   }

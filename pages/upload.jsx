@@ -1,7 +1,13 @@
 import Sidebar from '../components/Sidebar'
 import Tabs from '../components/Tabs';
+import { useSession, getSession } from 'next-auth/react'
 
-const Upload = () => {
+export default function Upload() {
+
+    const { data: session, status } = useSession()
+
+    if(status === 'loading') { return <p>Chargement...</p> }
+    if(status === 'unauthenticated') { return <p>Accès refusé</p> }
 
     return (
         <section className="upload">
@@ -10,8 +16,6 @@ const Upload = () => {
                 <Tabs />
             </div>
         </section>
-
     )
-}
 
-export default Upload;
+}

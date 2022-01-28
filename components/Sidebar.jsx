@@ -1,7 +1,11 @@
 import Image from "next/image"
 import Link from "next/link"
+import { signOut } from 'next-auth/react'
 
 const Sidebar = () => {
+
+    /*
+     */
     return (
         <section className="sidebar">
             <div className="user-top">
@@ -48,7 +52,7 @@ const Sidebar = () => {
             <div className="sidebar-disconnect-link">
                <Image src='/disconnect.png' alt='icon déconnexion' width={24} height={24} />
                 <Link href='#'>
-                    <a className='link'>Se déconnecter</a>
+                    <a className='link' onClick={() => signOut()}>Se déconnecter</a>
                 </Link>
             </div>
         </section>
