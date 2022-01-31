@@ -2,7 +2,11 @@ import Register from '../../components/Register'
 import Login from '../../components/Login'
 import CloseModal from '../../components/CloseModal'
 
-import { useRef, useState } from 'react/cjs/react.development'
+import { useEffect, useRef, useState } from 'react/cjs/react.development'
+import { useContext } from 'react'
+import Auth from '../../context/Auth'
+import { useRouter } from 'next/router'
+
 export default function Index() {
 
     const [showLogin, setShowLogin] = useState(false)
@@ -35,6 +39,12 @@ export default function Index() {
         setShowRegister(false) || setShowLogin(false)
     }
 
+    const {isAuthenticated, setIsAuthenticated} = useContext(Auth)
+    const router = useRouter()
+    useEffect(() => {
+        console.log(isAuthenticated);
+        if(isAuthenticated) router.push('/profile')
+    })
 
     return (
         <section className='home'>

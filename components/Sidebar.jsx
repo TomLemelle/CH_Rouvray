@@ -1,11 +1,19 @@
 import Image from "next/image"
 import Link from "next/link"
 import { signOut } from 'next-auth/react'
+import { logout } from "../services/AuthApi"
+import { useContext } from "react"
+import Auth from "../context/Auth"
 
 const Sidebar = () => {
 
-    /*
-     */
+    const {isAuthenticated, setIsAuthenticated} = useContext(Auth)
+
+    const handleLogout = () => {
+        logout()
+        setIsAuthenticated(false)
+    }
+
     return (
         <section className="sidebar">
             <div className="user-top">
@@ -52,7 +60,7 @@ const Sidebar = () => {
             <div className="sidebar-disconnect-link">
                <Image src='/disconnect.png' alt='icon déconnexion' width={24} height={24} />
                 <Link href='#'>
-                    <a className='link' onClick={() => signOut()}>Se déconnecter</a>
+                    <a className='link' onClick={handleLogout}>Se déconnecter</a>
                 </Link>
             </div>
         </section>

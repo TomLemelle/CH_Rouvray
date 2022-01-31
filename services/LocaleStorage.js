@@ -1,26 +1,19 @@
-export function removeItem() {}
-removeItem.getInitialProps = async ({ req }, itemToRemove) => {
-  if (req) {
-    return { page: {} };
-  } else {
+export const getFromStorage = (item) => {
+  if (typeof window !== "undefined") {
+    window.localStorage.getItem(item);
+  }
+};
+
+export const setToStorage = (name, itemToSet) => {
+  if (typeof window !== "undefined") {
+    return window.localStorage.setItem(name, itemToSet);
+  }
+};
+
+export const removeToStorage = (itemToRemove) => {
+  if (typeof window !== "undefined") {
+    console.log("cc");
     window.localStorage.removeItem(itemToRemove);
   }
-};
-
-export function getItem() {}
-getItem.getInitialProps = async ({ req }, item) => {
-  if (req) {
-    return { page: {} };
-  } else {
-    return window.localStorage.getItem(item);
-  }
-};
-
-export function addItem() {}
-addItem.getInitialProps = async ({ req }, localeStorageName, newItem) => {
-  if (req) {
-    return { page: {} };
-  } else {
-    window.localStorage.setItem(localeStorageName, newItem);
-  }
+  return console.log("coucou");
 };

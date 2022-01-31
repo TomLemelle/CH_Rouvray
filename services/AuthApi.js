@@ -1,16 +1,18 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import { getItem, addItem, removeItem } from "./LocaleStorage";
+import { removeToStorage, setToStorage, getFromStorage } from "./LocaleStorage";
 
 const URLApi = "http://127.0.0.1:8000/api/";
 export function hasAuthenticated() {
-  const token = getItem("chrouvrayToken");
-  const result = token ? tokenIsValid(token) : false;
-
-  if (false === result) {
-    removeItem("chrouvrayToken");
+  if (typeof window !== "undefined") {
+    const token = window.localStorage.getItem("chrouvrayToken");
+    const result = token ? tokenIsValid(token) : false;
+    if (false === result) {
+      window.localStorage.removeItem("chrouvrayToken");
+    }
+    return result;
   }
-  return result;
+  return false;
 }
 
 export function login(credentials) {
@@ -18,14 +20,16 @@ export function login(credentials) {
     .post(URLApi + "authentication_token", credentials)
     .then((response) => response.data.token)
     .then((token) => {
-      addItem("Token", token);
-
-      return true;
+      console.log(token);
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem("chrouvrayToken", token);
+      }
     });
 }
 
 export function logout() {
-  removeItem("chrouvrayToken");
+  if (typeof window !== "undefined")
+    window.localStorage.removeItem("chrouvrayToken");
 }
 
 function tokenIsValid(token) {
@@ -35,4 +39,8 @@ function tokenIsValid(token) {
     return true;
   }
   return false;
+}
+
+export function decodeJWT(token) {
+  return jwtDecode(token);
 }
