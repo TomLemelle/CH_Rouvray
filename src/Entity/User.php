@@ -2,17 +2,31 @@
 
 namespace App\Entity;
 
+use App\Controller\MeController;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  */
-#[ApiResource()]
+#[ApiResource(collectionOperations: [
+    'get',
+    'post',
+    'me' => [
+        'method' => 'GET',
+        'path' => '/me',
+        'controller' => MeController::class,
+        "security" => "is_granted('ROLE_USER')"
+    ]],
+        normalizationContext: ["groups" => ["write:me"]],
+    )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
@@ -20,37 +34,52 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(["write:me"])]
     private $id;
 
     /**
      * @ORM\Column(unique=true, type="string", length=255)
      */
-    private $email;
+    #[Groups(["write:me"])]
+    private ?string $email;
 
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    #[Groups(["write:me"])]
+    private array $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
-    private $password;
+    private string $password;
+
+     /**
+     * @var string The plain password
+     * @ORM\Column(type="string")
+     */
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $firstName;
+    #[Groups(["write:me"])]
+    private ?string $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $lastName;
+    #[Groups(["write:me"])]
+    private ?string $lastName;
 
-
+    /**
+     * @ORM\OneToMany(targetEntity=Post::class, mappedBy="author")
+     */
+    private $posts;
+    
     public function __construct()
     {
+        $this->posts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -166,4 +195,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection|Post[]
+     */
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
+    public function addPost(Post $post): self
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts[] = $post;
+            $post->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removePost(Post $post): self
+    {
+        if ($this->posts->removeElement($post)) {
+            // set the owning side to null (unless already changed)
+            if ($post->getAuthor() === $this) {
+                $post->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
 }
